@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EduManage Student Management System">
+  <title>EduManage | Student Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="EduManage home">
+        <span class="brand-mark">E</span>
+        <span><strong>EduManage</strong><small>STUDENT PORTAL</small></span>
+      </a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-link active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-link" data-page="students"><span>♙</span> Students</button>
+        <button class="nav-link" data-page="add"><span>＋</span> Add Student</button>
+        <button class="nav-link" data-page="about"><span>ⓘ</span> About Project</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-profile"><div class="avatar">E</div><div><b>EduManage</b><small>Administrator</small></div></div>
+        <p>Organize learning.<br>Inspire success.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <b id="pageCrumb">Dashboard</b></div>
+        <div class="top-actions"><span class="today" id="todayLabel"></span><div class="top-avatar">E</div></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome">
+          <div><span class="eyebrow">STUDENT MANAGEMENT SYSTEM</span><h1>Good day, Administrator.</h1><p>Here’s what’s happening in your learning community.</p></div>
+          <button class="primary-btn" data-go="add">＋ Add New Student</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total Students</span><span class="stat-icon">♙</span></div><strong id="totalCount">0</strong><small>Registered student records</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Active Students</span><span class="stat-icon green">✓</span></div><strong id="activeCount">0</strong><small>Currently active</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Inactive Students</span><span class="stat-icon muted">Ⅱ</span></div><strong id="inactiveCount">0</strong><small>Currently inactive</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Courses</span><span class="stat-icon gold">▤</span></div><strong id="courseCount">0</strong><small>Unique courses enrolled</small></article>
+        </div>
+        <div class="content-card">
+          <div class="section-heading"><div><span class="eyebrow">OVERVIEW</span><h2>Recently registered</h2></div><button class="text-btn" data-go="students">View all students →</button></div>
+          <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>COURSE</th><th>YEAR</th><th>STATUS</th></tr></thead><tbody id="recentBody"></tbody></table></div>
+          <div class="empty-state" id="recentEmpty" hidden>No students yet. Add your first student to get started.</div>
+        </div>
+        <div class="bottom-note"><span>✦</span> A little progress each day adds up to big results.</div>
+      </section>
+
+      <section class="page" id="page-students">
+        <div class="page-heading"><div><span class="eyebrow">DIRECTORY</span><h1>Student Records</h1><p>View and manage all registered students.</p></div><button class="primary-btn" data-go="add">＋ Add Student</button></div>
+        <div class="content-card">
+          <div class="toolbar"><div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search by name, email, course or ID..."></div><select id="statusFilter" aria-label="Filter by status"><option value="all">All statuses</option><option>Active</option><option>Inactive</option></select><button class="secondary-btn" id="exportBtn">↓ Export CSV</button></div>
+          <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>COURSE</th><th>YEAR</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="studentsBody"></tbody></table></div>
+          <div class="empty-state" id="studentsEmpty" hidden>No matching students found.</div>
+          <div class="table-footer" id="tableFooter"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-add">
+        <div class="page-heading"><div><span class="eyebrow">REGISTRATION</span><h1 id="formTitle">Add New Student</h1><p>Fill in the details to create a student record.</p></div></div>
+        <div class="form-card">
+          <form id="studentForm">
+            <input type="hidden" id="editId">
+            <div class="form-section-title"><span>01</span><div><b>Personal Information</b><small>Basic student details</small></div></div>
+            <div class="form-grid">
+              <label>Full Name <em>*</em><input id="studentName" required maxlength="70" placeholder="e.g. Ayesha Khan"></label>
+              <label>Email Address <em>*</em><input id="studentEmail" type="email" required placeholder="e.g. ayesha@email.com"></label>
+            </div>
+            <div class="form-section-title second"><span>02</span><div><b>Academic Information</b><small>Course and enrollment details</small></div></div>
+            <div class="form-grid">
+              <label>Course <em>*</em><select id="studentCourse" required><option value="">Select a course</option><option>Python</option><option>Web Development</option><option>Data Science</option><option>Artificial Intelligence</option><option>Graphic Design</option><option>Cybersecurity</option></select></label>
+              <label>Study Year <em>*</em><select id="studentYear" required><option value="">Select year</option><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option></select></label>
+              <label class="full-field">Enrollment Status<select id="studentStatus"><option>Active</option><option>Inactive</option></select></label>
+            </div>
+            <div class="form-actions"><button type="button" class="secondary-btn" id="cancelBtn">Cancel</button><button type="submit" class="primary-btn" id="saveBtn">Save Student →</button></div>
+            <p class="form-message" id="formMessage" role="status"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="page" id="page-about">
+        <div class="page-heading"><div><span class="eyebrow">OUR PROJECT</span><h1>About EduManage</h1><p>A simple, thoughtful way to organize student information.</p></div></div>
+        <div class="about-card"><div class="about-symbol">E</div><span class="eyebrow">BUILT FOR LEARNING</span><h2>Education, organized.</h2><p>EduManage is a student management web application designed to make basic academic record management clear and accessible. It is built using HTML, CSS and JavaScript, and can be hosted for free with GitHub Pages.</p><div class="tech-list"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>GitHub Pages</span></div><div class="notice"><b>Demo project note</b><br>Student records are saved in this browser using local storage. They are not stored in a central database and will not automatically sync across devices. Avoid entering sensitive real student information.</div></div>
+      </section>
+      <footer>© <span id="yearNow"></span> EduManage <span>•</span> Made with care for better learning</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
